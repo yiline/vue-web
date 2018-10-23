@@ -26,7 +26,16 @@ import App from './App.vue'
 //引入路由模块
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
+//设置根路径
+Vue.http.options.root = 'http://027xin.com:8899'
 
+//时间格式化(过滤器)
+import moment from 'moment'
+Vue.filter('dataFormat',(datatime,pattern='YYYY-MM-DD HH:mm:ss')=>{
+    return moment(datatime).format(pattern)
+})
+//post提交第三个参数
+Vue.http.options.emulateJSON = true
 
 //头部
 import MintUI from 'mint-ui'
@@ -36,7 +45,7 @@ Vue.use(MintUI)
 //底部样式mui
 import './assets/mui/css/mui.min.css'
 import './assets/mui/css/icons-extra.css'
-
+import mui from'./assets/mui/js/mui.min.js'
 
 
 new Vue({
