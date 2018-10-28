@@ -2,10 +2,10 @@
   <div id="bigbox">
     <!-- 头部 -->
     <mt-header fixed title="黑马程序员 vue项目">
-			 <router-link to="/" slot="left">
-    			<mt-button icon="back">返回</mt-button>
-  		</router-link>
-		</mt-header>
+		<span slot="left" v-show="flag">
+		<mt-button icon="back" @click="goBack">返回</mt-button>
+		</span>
+	</mt-header>
 
 		<!-- 中间区域 -->
 		<transition>
@@ -24,7 +24,7 @@
 			<span class="mui-tab-label">会员</span>
 		</router-link>
 		<router-link class="mui-tab-item-llb" to="/shopping">
-			<span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge">9</span></span>
+			<span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge" id='badge'>{{$store.getters.getAllCount}}</span></span>
 			<span class="mui-tab-label">购物车</span>
 		</router-link>
 		<router-link class="mui-tab-item-llb" to="search">
@@ -37,12 +37,34 @@
 
 <script>
 export default {
-  name: 'App'
+	name: 'App',
+	data(){
+		return{
+			flag:false
+		}
+	},
+	created(){
+		this.flag = this.$route.path === '/home' ? false:true
+	},
+	methods:{
+		goBack(){
+			this.$router.go(-1)
+		}
+	},
+	watch:{
+		'$route.path':function(newval){
+			if(newval == '/home'){
+				this.flag = false
+			}else{
+				this.flag = true
+			}
+		}
+	}
 }
 
 </script>
 
-<style>
+<style scoped>
 #bigbox{
     padding-top: 40px;
 		padding-bottom: 50px;

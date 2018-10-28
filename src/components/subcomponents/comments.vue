@@ -9,7 +9,7 @@
     <div class="cmt-list">
       <div class="cmt-item" v-for="(item,index) in commentInfo" :key="index">
         <div class="cmt-title">
-          第{{index+1}}楼{{index+1}}用户:{{item.user_name}}发表时间:{{item.add_time}}
+          第{{index+1}}楼{{index+1}}用户:{{item.user_name}}发表时间:{{item.add_time | dataFormat}}
         </div>
         <div class="cmt-body">
             {{item.content =="undefined" ?'此用户未评论':item.content }}

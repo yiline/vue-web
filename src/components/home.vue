@@ -1,12 +1,11 @@
 <template>
   <div id="homeBox">
-    <mt-swipe :auto="4000" id="swiper">
+    <!-- <mt-swipe :auto="4000" id="swiper">
       <mt-swipe-item v-for= '(item, index) in list' :key='index'>
         <img :src="item.img" alt="">
       </mt-swipe-item>
-      <!-- <mt-swipe-item>2</mt-swipe-item>
-      <mt-swipe-item>3</mt-swipe-item> -->
-    </mt-swipe>
+    </mt-swipe> -->
+    <swiper :list="lunboList" :isfull="isfull"></swiper>
 
      <ul class="mui-table-view mui-grid-view mui-grid-9">
           <li class="mui-table-view-cell mui-media mui-col-xs-4 ">
@@ -18,9 +17,9 @@
           <li class="mui-table-view-cell mui-media mui-col-xs-4"><router-link to="/home/photoList">
               <img src="../images/menu2.png" alt="">
               <div class="mui-media-body">图片分享</div></router-link></li>
-          <li class="mui-table-view-cell mui-media mui-col-xs-4"><a href="#">
+          <li class="mui-table-view-cell mui-media mui-col-xs-4"><router-link to="/home/goodsList">
               <img src="../images/menu3.png" alt="">
-              <div class="mui-media-body">商品购买</div></a></li>
+              <div class="mui-media-body">商品购买</div></router-link></li>
           <li class="mui-table-view-cell mui-media mui-col-xs-4"><a href="#">
               <img src="../images/menu4.png" alt="">
               <div class="mui-media-body">留言反馈</div></a></li>
@@ -36,10 +35,12 @@
 
 <script>
 import { Toast } from "mint-ui";
+import swiper from "./subcomponents/swiper.vue"
 export default {
   data() {
     return {
-      list: []
+      lunboList: [],
+      isfull:true
     };
   },
   created() {
@@ -50,12 +51,15 @@ export default {
       this.$http.get("api/getlunbo").then(response => {
         if (response.body.status == 0) {
           //console.log(response.body)
-          this.list = response.body.message;
+          this.lunboList = response.body.message;
         } else {
           Toast("轮播图获取图片失败");
         }
       });
     }
+  },
+  components:{
+    swiper,
   }
 };
 </script>
@@ -63,24 +67,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang='less'>
 #homeBox {
-  #swiper {
-    height: 200px;
-    .mint-swipe-item {
-      &:nth-child(1) {
-        background-color: pink;
-      }
-      &:nth-child(2) {
-        background-color: skyblue;
-      }
-      &:nth-child(3) {
-        background-color: green;
-      }
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
   .mui-table-view.mui-grid-view {
     background-color: #fff;
     li {

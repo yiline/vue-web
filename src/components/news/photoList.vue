@@ -24,6 +24,7 @@
 </template>
 <script>
 import { Toast } from 'mint-ui'
+import mui from'../../assets/mui/js/mui.min.js'
 export default {
   data() {
     return {
